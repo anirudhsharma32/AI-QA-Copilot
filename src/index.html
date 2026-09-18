@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI QA Copilot</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-lockup"><div class="brand-mark">Q</div><div><div class="brand-name">AI QA Copilot</div><div class="brand-subtitle">Quality intelligence workspace</div></div></div>
+      <div class="topbar-tools"><div class="github-connection"><span class="pulse-dot" id="github-dot"></span><span id="github-status">GitHub not connected</span><button class="github-button" id="github-button" type="button">Connect GitHub</button></div><div class="topbar-note"><span class="pulse-dot"></span> Ready for review</div></div>
+    </header>
+
+    <main class="workspace">
+      <section class="hero-row"><div><p class="eyebrow">TEST INTELLIGENCE / 01</p><h1>Turn uncertainty into<br><em>evidence.</em></h1></div><p class="hero-copy">Bring a requirement, defect, log, or code fragment. Copilot maps the risk, sharpens the oracle, and gives your team the next test worth running.</p></section>
+
+      <div class="content-grid">
+        <section class="panel input-panel">
+          <div class="panel-heading"><div><p class="eyebrow">ANALYSIS BRIEF</p><h2>What should we test?</h2></div><span class="step-tag">01</span></div>
+          <div class="field-group github-field"><label for="github-token">GitHub fine-grained token <span>read-only</span></label><div class="key-field"><input id="github-token" type="password" autocomplete="off" placeholder="github_pat_••••••••••••"><span class="lock-icon">&#9679;</span></div><p class="field-hint">Used only to verify your account and held in memory until disconnect or close.</p></div>
+          <div class="field-group"><label for="api-key">OpenAI API key <span>required</span></label><div class="key-field"><input id="api-key" type="password" autocomplete="off" placeholder="sk-••••••••••••••••••••••••"><span class="lock-icon">&#9679;</span></div><p class="field-hint">Used for this analysis only. Never saved to disk or shown in the interface.</p></div>
+          <div class="field-group compact-field"><label for="model">Model</label><select id="model"><option value="gpt-4o-mini">GPT-4o mini · fast</option><option value="gpt-4o">GPT-4o · deeper reasoning</option><option value="gpt-4.1-mini">GPT-4.1 mini · precise</option></select></div>
+          <div class="field-group"><div class="label-row"><label for="qa-input">QA material</label><span id="char-count">0 / 30,000</span></div><textarea id="qa-input" maxlength="30000" placeholder="Paste a user story, acceptance criteria, bug report, API contract, log excerpt, or code here..."></textarea></div>
+          <div class="upload-row"><button class="upload-button" id="upload-button" type="button"><span class="upload-icon">+</span> Attach source file</button><span id="file-name" class="file-name">TXT, CSV, JSON, LOG, PY, JS, JAVA, SQL, DOCS</span></div>
+          <div class="action-row"><button class="button button-primary" id="generate-button" type="button"><span>Generate QA analysis</span><span class="arrow">&#8599;</span></button><button class="button button-quiet" id="clear-button" type="button">Clear</button></div>
+        </section>
+
+        <section class="panel output-panel">
+          <div class="panel-heading"><div><p class="eyebrow">COPILOT OUTPUT</p><h2>QA readout</h2></div><div class="output-actions"><button class="icon-button" id="copy-button" type="button" title="Copy response">&#10697;</button><button class="icon-button" id="save-button" type="button" title="Save response">&#8595;</button><button class="icon-button" id="regenerate-button" type="button" title="Regenerate response">&#8635;</button></div></div>
+          <div class="status-line" id="status-line"><span class="status-indicator"></span><span id="status-text">Waiting for your QA material</span></div>
+          <article class="response-area" id="response-area"><div class="empty-state"><div class="empty-glyph">+</div><h3>Your analysis will land here.</h3><p>Copilot will structure risk, acceptance criteria, scenarios, and the next action into a review-ready brief.</p></div></article>
+        </section>
+      </div>
+      <footer class="workspace-footer"><span>AI QA COPILOT <b>•</b> PRIVATE SESSION</span><span>API key is cleared when this window closes</span></footer>
+    </main>
+  </div>
+  <script src="renderer.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "ai-qa-copilot",
+  "version": "1.0.0",
+  "description": "A desktop AI QA Copilot for practical test analysis and planning.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron ."
+  },
+  "dependencies": {
+    "openai": "^4.104.0"
+  },
+  "devDependencies": {
+    "electron": "^37.2.6"
+  }
+}
