@@ -10,7 +10,7 @@
   <div class="app-shell">
     <header class="topbar">
       <div class="brand-lockup"><div class="brand-mark">Q</div><div><div class="brand-name">AI QA Copilot</div><div class="brand-subtitle">Quality intelligence workspace</div></div></div>
-      <div class="topbar-tools"><div class="github-connection"><span class="pulse-dot" id="github-dot"></span><span id="github-status">GitHub not connected</span><button class="github-button" id="github-button" type="button">Connect GitHub</button></div><div class="topbar-note"><span class="pulse-dot"></span> Ready for review</div></div>
+      <div class="topbar-tools"><div class="topbar-note"><span class="pulse-dot"></span> Ready for review</div></div>
     </header>
 
     <main class="workspace">
@@ -19,7 +19,22 @@
       <div class="content-grid">
         <section class="panel input-panel">
           <div class="panel-heading"><div><p class="eyebrow">ANALYSIS BRIEF</p><h2>What should we test?</h2></div><span class="step-tag">01</span></div>
-          <div class="field-group github-field"><label for="github-token">GitHub fine-grained token <span>read-only</span></label><div class="key-field"><input id="github-token" type="password" autocomplete="off" placeholder="github_pat_••••••••••••"><span class="lock-icon">&#9679;</span></div><p class="field-hint">Used only to verify your account and held in memory until disconnect or close.</p></div>
+          <details class="testrail-panel">
+            <summary>Connect TestRail</summary>
+            <div class="field-group"><label for="testrail-url">TestRail instance URL</label><input id="testrail-url" type="url" placeholder="https://company.testrail.io"></div>
+            <div class="field-group"><label for="testrail-username">Account email</label><input id="testrail-username" type="email" autocomplete="username" placeholder="you@company.com"></div>
+            <div class="field-group"><label for="testrail-api-key">TestRail API key</label><div class="key-field"><input id="testrail-api-key" type="password" autocomplete="off" placeholder="Enter a rotated API key"><span class="lock-icon">&#9679;</span></div><p class="field-hint">Held in memory only; cleared when disconnected or when the app closes.</p></div>
+            <div class="testrail-actions"><button class="github-button" id="testrail-connect" type="button">Connect</button><button class="github-button" id="testrail-disconnect" type="button" hidden>Disconnect</button></div>
+            <div id="testrail-data" class="testrail-data" aria-live="polite"></div>
+          </details>
+          <details class="atlassian-panel">
+            <summary>Connect Confluence and Jira</summary>
+            <div class="field-group"><label for="atlassian-url">Atlassian site URL</label><input id="atlassian-url" type="url" placeholder="https://company.atlassian.net"></div>
+            <div class="field-group"><label for="atlassian-email">Account email</label><input id="atlassian-email" type="email" autocomplete="username" placeholder="you@company.com"></div>
+            <div class="field-group"><label for="atlassian-token">Atlassian API token</label><div class="key-field"><input id="atlassian-token" type="password" autocomplete="off" placeholder="Enter a rotated API token"><span class="lock-icon">&#9679;</span></div><p class="field-hint">Held in memory only; cleared when disconnected or when the app closes.</p></div>
+            <div class="atlassian-actions"><button class="github-button" id="atlassian-connect" type="button">Connect</button><button class="github-button" id="atlassian-disconnect" type="button" hidden>Disconnect</button></div>
+            <div id="atlassian-data" class="testrail-data" aria-live="polite"></div>
+          </details>
           <div class="field-group"><label for="api-key">OpenAI API key <span>required</span></label><div class="key-field"><input id="api-key" type="password" autocomplete="off" placeholder="sk-••••••••••••••••••••••••"><span class="lock-icon">&#9679;</span></div><p class="field-hint">Used for this analysis only. Never saved to disk or shown in the interface.</p></div>
           <div class="field-group compact-field"><label for="model">Model</label><select id="model"><option value="gpt-4o-mini">GPT-4o mini · fast</option><option value="gpt-4o">GPT-4o · deeper reasoning</option><option value="gpt-4.1-mini">GPT-4.1 mini · precise</option></select></div>
           <div class="field-group"><div class="label-row"><label for="qa-input">QA material</label><span id="char-count">0 / 30,000</span></div><textarea id="qa-input" maxlength="30000" placeholder="Paste a user story, acceptance criteria, bug report, API contract, log excerpt, or code here..."></textarea></div>
@@ -36,6 +51,7 @@
       <footer class="workspace-footer"><span>AI QA COPILOT <b>•</b> PRIVATE SESSION</span><span>API key is cleared when this window closes</span></footer>
     </main>
   </div>
+  <script src="../node_modules/chart.js/dist/chart.umd.js"></script>
   <script src="renderer.js"></script>
 </body>
 </html>

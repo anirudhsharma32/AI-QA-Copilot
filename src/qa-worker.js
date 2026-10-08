@@ -23,6 +23,16 @@ Give a short ordered checklist for the engineer and tester, ending with the smal
 
 Be specific to the supplied material. Quote small details when useful, avoid inventing product behavior, and mark uncertainty clearly.`;
 
+const TEST_CASE_PROMPT = `You are QA Copilot generating executable manual test cases from the supplied QA test scenarios. Return Markdown with exactly these sections:
+
+## Generated test cases
+Provide a table with columns: Test case ID, priority, title, preconditions, test data, steps, expected result, and type. Make each step numbered inside its cell, keep expected results observable and pass/fail, and preserve the intent of every supplied scenario. Include positive, negative, boundary, permission, compatibility, and recovery cases only when supported by the scenarios. Do not invent requirements; label any assumption clearly below the table.
+
+## Execution notes
+List the smallest fixture setup, cleanup, and evidence to capture during execution.
+
+Be concise, specific, and ready for a QA engineer to execute.`;
+
 function getFriendlyError(error) {
   if (error?.status === 401) return 'The API key was rejected. Check that it is active and pasted correctly.';
   if (error?.status === 429) return 'OpenAI rate limit reached. Wait a moment and regenerate, or check your account limits.';
@@ -34,11 +44,14 @@ function getFriendlyError(error) {
 (async () => {
   try {
     const client = new OpenAI({ apiKey: workerData.apiKey });
-    const userMessage = `Analyze this QA material. Source file: ${workerData.fileName || 'direct input'}\n\n${workerData.input}`;
+    const isTestCaseRequest = workerData.action === 'generate-test-cases';
+    const userMessage = isTestCaseRequest
+      ? `Convert these generated test scenarios into executable test cases.\n\n${workerData.input}`
+      : `Analyze this QA material. Source file: ${workerData.fileName || 'direct input'}\n\n${workerData.input}`;
     const completion = await client.chat.completions.create({
       model: workerData.model || 'gpt-4o-mini',
       temperature: 0.2,
-      messages: [{ role: 'system', content: SYSTEM_PROMPT }, { role: 'user', content: userMessage }]
+      messages: [{ role: 'system', content: isTestCaseRequest ? TEST_CASE_PROMPT : SYSTEM_PROMPT }, { role: 'user', content: userMessage }]
     });
     const response = completion.choices?.[0]?.message?.content;
     if (!response) throw new Error('The model returned an empty response.');
